@@ -5,20 +5,20 @@ import "./user-info.less";
 class Page extends React.Component {
     componentWillMount(){
         this.setState({
-            names : {}    ,
-            telephone : {}, 
-            f_telephone: {}  ,
-            email: {} ,
-            d_type: {}  ,
-            c_name: {} ,
+            names : {} ,
+            telephone : {} , 
+            // f_telephone: {} ,
+            // email: {} ,
+            d_type: {} ,
+            // c_name: {} ,
             address: {} ,
             number: {} ,
             bank_branch: {},
             bank_account: {} ,
             card_photos : {} ,
             card_photoss : {} ,
-            bank_photos : {} ,
-            photos : {} 
+            bank_photos : {} 
+            // photos : {} 
         })
         setTimeout(function(){
             $('#check')[0].checked = 'checked';
@@ -62,6 +62,7 @@ class Page extends React.Component {
                 },
             }).done(function(res) {
                 item.value = 'http://x.eat163.com/' + item.key;
+                item.error = '';
                 console.log(res);
             }).fail(function(res) {
                 console.log(res);
@@ -74,10 +75,16 @@ class Page extends React.Component {
         item.value = e.target.value.trim().slice(0 , 100);
         this.setState(this.state);
     }
-    check(node){
+    check(key , node){
         if(!node.value){
             node.error = 'has-error';
             return false;
+        }
+        if(key == 'telephone'){
+            if(!(/^1\d{10}$/.test(node.value))){ 
+                node.error = 'has-error';
+                return false; 
+            } 
         }
         return true;
     }
@@ -85,7 +92,7 @@ class Page extends React.Component {
         var item = this.state;
         var flag = false;
         for(var key in item){
-            if(!this.check(item[key])){
+            if(!this.check(key , item[key])){
                 if(!flag){
                     flag = key;
                 }
@@ -100,10 +107,10 @@ class Page extends React.Component {
         $.post('http://abc.wanwantoo.com/home/Index/submissInfo' , {
             names : item.names.value , 
             telephone: item.telephone.value , 
-            f_telephone: item.f_telephone.value , 
-            email: item.email.value , 
+            // f_telephone: item.f_telephone.value , 
+            // email: item.email.value , 
             d_type: item.d_type.value , 
-            c_name: item.c_name.value , 
+            // c_name: item.c_name.value , 
             address: item.address.value , 
             number: item.number.value , 
             bank_branch: item.bank_branch.value , 
@@ -111,7 +118,7 @@ class Page extends React.Component {
             card_photos: item.card_photos.value , 
             card_photoss: item.card_photoss.value , 
             bank_photos: item.bank_photos.value , 
-            photos : item.photos.value 
+            // photos : item.photos.value 
         } , function(json){
             if(json.code == 200){
                 alert('提交成功!')
@@ -132,13 +139,6 @@ class Page extends React.Component {
         return (
             <div id='content'>
                 <div className='container'>
-                    <div className={"form-group "  } >
-                        <div className='line'>
-                            <label>企业法人：</label>
-                            <div className='text'>自然人</div>
-                            <div className='clear-float'></div>
-                        </div>
-                    </div>
                     <div className={"form-group " + this.state.names.error } id='names'>
                         <div className='line'>
                             <label>姓名：</label>
@@ -157,15 +157,7 @@ class Page extends React.Component {
                         </div>
                         <div className='error-msg'>格式：15088888888(同时接受指令下达人的资金划拔人信息）</div>
                     </div>
-                    <div className={"form-group " + this.state.f_telephone.error } id='f_telephone'>
-                        <div className='line'>
-                            <label>固定电话：</label>
-                            <input className="form-control" onChange={this.input.bind(this , 'f_telephone')} value={this.state.f_telephone.value} placeholder="格式：0371-6788888"  spellCheck="false" />
-                            <div className='important'>*</div>
-                            <div className='clear-float'></div>
-                        </div>
-                        <div className='error-msg'>格式：0371-6788888</div>
-                    </div>
+                    
                     <div className={"form-group " + this.state.address.error } id='address'>
                         <div className='line'>
                             <label>地址：</label>
@@ -221,15 +213,7 @@ class Page extends React.Component {
                         </div>
                         <div className='error-msg'>格式：410103XXXXXXXXXXXX(18位数字或字母)</div>
                     </div>
-                    <div className={"form-group " + this.state.email.error } id='email'>
-                        <div className='line'>
-                            <label>电子邮箱：</label>
-                            <input className="form-control" onChange={this.input.bind(this , 'email')} value={this.state.email.value} placeholder="格式：XXX@163.com、XXX@qq.com等等"  spellCheck="false" />
-                            <div className='important'>*</div>
-                            <div className='clear-float'></div>
-                        </div>
-                        <div className='error-msg'>格式：XXX@163.com、XXX@qq.com等等</div>
-                    </div>
+                    
                     <div className={"form-group " + this.state.bank_branch.error } id='bank_branch'>
                         <div className='line'>
                             <label>开户支行：</label>
@@ -248,15 +232,7 @@ class Page extends React.Component {
                         </div>
                         <div className='error-msg'>银卡帐号不能为空</div>
                     </div>
-                    <div className={"form-group " + this.state.c_name.error } id='c_name'>
-                        <div className='line'>
-                            <label>持卡人姓名：</label>
-                            <input className="form-control" onChange={this.input.bind(this , 'c_name')} value={this.state.c_name.value} placeholder="持卡人姓名"  spellCheck="false" />
-                            <div className='important'>*</div>
-                            <div className='clear-float'></div>
-                        </div>
-                        <div className='error-msg'>持卡人姓名不能为空</div>
-                    </div>
+                    
                     <div className="form-group has-pic" >
                         <label>身份证：</label>
                         <div id='card_photos' className={'up-pic ' + this.state.card_photos.error} style={{backgroundImage : 'url('+ (this.state.card_photos.localSrc || '#')+')'}}>
@@ -280,18 +256,9 @@ class Page extends React.Component {
                         </div>
                         <div className='clear-float'></div>
                     </div>
-                    <div className="form-group has-pic">
-                        <label style={{'lineHeight' : '20px' , 'marginTop' : '9px'}}>手持身份证、银行卡正面：</label>
-                        <div id='photos' className={'up-pic ' + this.state.photos.error}  style={{backgroundImage : 'url('+ (this.state.photos.localSrc || '#')+')'}}>
-                            {this.state.photos.localSrc ? '' : '手持身份证、银行卡正面'}
-                            <input type="file" name="file" onChange={self.upload.bind(this , this.state.photos )} accept="image/gif,image/jpeg,image/jpg,image/png,image/bmp" />
-                            <div className='upload-mask' style={{height : (100-this.state.photos.status) + '%'}}></div>
-                        </div>
-                        <div className='clear-float'></div>
-                    </div>
                     <div className='clear-float'></div>
                     <div className='ft'>
-                        <a className=''>风险说明</a>
+                        <a target='_blank' href='http://x.eat163.com/59845331104.htm'>风险说明</a>
                         <span><input type='checkbox' id='check' />本人/本单位已认真阅读以上风险说明并完全理解和同意</span>
                         <div className='clear-float'></div>
                         <button type="button" className="btn btn-primary" onClick={this.submit.bind(this)}>提交</button>
@@ -307,3 +274,57 @@ ReactDOM.render(
     <Page />,
     document.getElementById('root')
 );
+
+
+/**
+    <div className={"form-group " + this.state.f_telephone.error } id='f_telephone'>
+        <div className='line'>
+            <label>固定电话：</label>
+            <input className="form-control" onChange={this.input.bind(this , 'f_telephone')} value={this.state.f_telephone.value} placeholder="格式：0371-6788888"  spellCheck="false" />
+            <div className='important'>*</div>
+            <div className='clear-float'></div>
+        </div>
+        <div className='error-msg'>格式：0371-6788888</div>
+    </div>
+    <div className={"form-group " + this.state.email.error } id='email'>
+        <div className='line'>
+            <label>电子邮箱：</label>
+            <input className="form-control" onChange={this.input.bind(this , 'email')} value={this.state.email.value} placeholder="格式：XXX@163.com、XXX@qq.com等等"  spellCheck="false" />
+            <div className='important'>*</div>
+            <div className='clear-float'></div>
+        </div>
+        <div className='error-msg'>格式：XXX@163.com、XXX@qq.com等等</div>
+    </div>
+    <div className={"form-group " + this.state.c_name.error } id='c_name'>
+        <div className='line'>
+            <label>持卡人姓名：</label>
+            <input className="form-control" onChange={this.input.bind(this , 'c_name')} value={this.state.c_name.value} placeholder="持卡人姓名"  spellCheck="false" />
+            <div className='important'>*</div>
+            <div className='clear-float'></div>
+        </div>
+        <div className='error-msg'>持卡人姓名不能为空</div>
+    </div>
+
+    <div className="form-group has-pic">
+        <label>银行卡正面：</label>
+        <div id='bank_photos' className={'up-pic ' + this.state.bank_photos.error} style={{backgroundImage : 'url('+ (this.state.bank_photos.localSrc || '#')+')'}}>
+            {this.state.bank_photos.localSrc ? '' : '银行卡正面：'}
+            <input type="file" name="file" onChange={self.upload.bind(this , this.state.bank_photos )} accept="image/gif,image/jpeg,image/jpg,image/png,image/bmp" />
+            <div className='upload-mask' style={{height : (100-this.state.bank_photos.status) + '%'}}></div>
+        </div>
+        <div className='clear-float'></div>
+    </div>
+    <div className="form-group has-pic">
+        <label style={{'lineHeight' : '20px' , 'marginTop' : '9px'}}>手持身份证、银行卡正面：</label>
+        <div id='photos' className={'up-pic ' + this.state.photos.error}  style={{backgroundImage : 'url('+ (this.state.photos.localSrc || '#')+')'}}>
+            {this.state.photos.localSrc ? '' : '手持身份证、银行卡正面'}
+            <input type="file" name="file" onChange={self.upload.bind(this , this.state.photos )} accept="image/gif,image/jpeg,image/jpg,image/png,image/bmp" />
+            <div className='upload-mask' style={{height : (100-this.state.photos.status) + '%'}}></div>
+        </div>
+        <div className='clear-float'></div>
+    </div>
+
+**/
+
+
+

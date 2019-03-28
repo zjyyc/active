@@ -27,14 +27,8 @@ class Page extends React.Component {
                         <tr>
                             <td className='label1'>移动电话：</td>
                             <td className='text'>{this.state.telephone}</td>
-                            <td className='label1'>固定电话：</td>
-                            <td className='text'>{this.state.f_telephone}</td>
-                        </tr>
-                        <tr>
                             <td className='label1'>地址：</td>
                             <td className='text'>{this.state.address}</td>
-                            <td className='label1'>电子信箱：</td>
-                            <td className='text'>{this.state.email}</td>
                         </tr>
                         <tr>
                             <td className='label1'>证件类型：</td>
@@ -48,31 +42,38 @@ class Page extends React.Component {
                             <td className='label1'>银行帐号：</td>
                             <td className='text'>{this.state.bank_account}</td>
                         </tr>
-                        <tr>
-                            <td className='label1'>持卡人姓名：</td>
-                            <td className='text'>{this.state.c_name}</td>
-                            <td className='label1'></td>
-                            <td className='text'></td>
-                        </tr>
+                        
 
                         <tr >
                             <td className='label1 h300'>身份证正面：</td>
                             <td className='text h300'>
-                                <div className='pic' style={{backgroundImage : 'url('+this.state.card_photos+'?x-oss-process=image/resize,m_fixed,w_750)'}}></div>
+                                <div className='pic' style={{backgroundImage : 'url('+this.state.card_photos+'?x-oss-process=image/resize,m_fixed,w_750)'}}>
+                                    <a target='_blank' href={this.state.card_photos+'?x-oss-process=image/resize,m_fixed,w_750'}>
+                                        <img src={this.state.card_photos+'?x-oss-process=image/resize,m_fixed,w_750'} />
+                                    </a>
+                                </div>
                             </td>
                             <td className='label1 h300'>身份证反面：</td>
                             <td className='text h300'>
-                                <div className='pic' style={{backgroundImage : 'url('+this.state.card_photoss+'?x-oss-process=image/resize,m_fixed,w_750)'}}></div>
+                                <div className='pic' style={{backgroundImage : 'url('+this.state.card_photoss+'?x-oss-process=image/resize,m_fixed,w_750)'}}>
+                                    <a target='_blank' href={this.state.card_photoss+'?x-oss-process=image/resize,m_fixed,w_750'}>
+                                        <img src={this.state.card_photoss+'?x-oss-process=image/resize,m_fixed,w_750'} />
+                                    </a>
+                                </div>
                             </td>
                         </tr>
-                        <tr>
+                        <tr >
                             <td className='label1 h300'>银行卡正面：</td>
                             <td className='text h300'>
-                                <div className='pic' style={{backgroundImage : 'url('+this.state.bank_photos+'?x-oss-process=image/resize,m_fixed,w_750)'}}></div>
+                                <div className='pic' style={{backgroundImage : 'url('+this.state.bank_photos+'?x-oss-process=image/resize,m_fixed,w_750)'}}>
+                                    <a target='_blank' href={this.state.bank_photos+'?x-oss-process=image/resize,m_fixed,w_750'}>
+                                        <img src={this.state.bank_photos+'?x-oss-process=image/resize,m_fixed,w_750'} />
+                                    </a>
+                                </div>
                             </td>
-                            <td className='label1 h300'>银行卡反面：</td>
+                            <td className='label1 h300'></td>
                             <td className='text h300'>
-                                <div className='pic' style={{backgroundImage : 'url('+this.state.photos+'?x-oss-process=image/resize,m_fixed,w_750)'}}></div>
+                                
                             </td>
                         </tr>
                     </tbody>
